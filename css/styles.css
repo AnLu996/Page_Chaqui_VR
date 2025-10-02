@@ -1,3 +1,4 @@
+
 @charset "UTF-8";
 /*!
 * Start Bootstrap - Agency v7.0.12 (https://startbootstrap.com/theme/agency)
@@ -3752,9 +3753,7 @@ textarea.form-control-lg {
 }
 
 
-
-
-
+/* ===== Navbar layout base ===== */
 .navbar > .container,
 .navbar > .container-fluid,
 .navbar > .container-sm,
@@ -3767,6 +3766,8 @@ textarea.form-control-lg {
   align-items: center;
   justify-content: space-between;
 }
+
+/* Marca */
 .navbar-brand {
   padding-top: var(--bs-navbar-brand-padding-y);
   padding-bottom: var(--bs-navbar-brand-padding-y);
@@ -3776,41 +3777,116 @@ textarea.form-control-lg {
   text-decoration: none;
   white-space: nowrap;
 }
-.navbar-brand:hover, .navbar-brand:focus {
+.navbar-brand:hover,
+.navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
 }
 
-.navbar-nav {
-  --bs-nav-link-padding-x: 0;
-  --bs-nav-link-padding-y: 0.5rem;
-  --bs-nav-link-font-weight: ;
-  --bs-nav-link-color: var(--bs-navbar-color);
-  --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
-  --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+/* ===== Colores de la navbar (variables BS) ===== */
+#mainNav {
+  --bs-navbar-color: rgba(255,255,255,0.85);
+  --bs-navbar-hover-color: #ffc800;   /* dorado inca al hover */
+  --bs-navbar-disabled-color: rgba(255,255,255,0.35);
+  --bs-navbar-active-color: #ffffff;
+}
+
+/* ===== Lista de navegación ===== */
+#mainNav .navbar-nav {
+  --bs-nav-link-padding-x: 0.9rem;
+  --bs-nav-link-padding-y: 0.75rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* móvil */
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
 }
-.navbar-nav .show > .nav-link,
-.navbar-nav .nav-link.active {
-  color: var(--bs-navbar-active-color);
+
+@media (min-width: 992px) { /* lg+ en horizontal */
+  #mainNav .navbar-nav {
+    flex-direction: row;
+  }
 }
-.navbar-nav .dropdown-menu {
+
+/* ===== Enlaces del menú ===== */
+#mainNav .navbar-nav .nav-link {
+  font-family: 'NegritaPro', 'Montserrat', sans-serif;
+  font-weight: 800;                 /* más “gruesito” */
+  font-size: 2rem;               /* un poco más grande */
+  letter-spacing: 0.06em;           /* ligera separación */
+  text-transform: uppercase;        /* estilo menú */
+  line-height: 1.2;
+  color: var(--bs-navbar-color) !important;  /* asegura color base */
+  transition: color 0.25s ease;
+}
+
+@media (min-width: 1200px) { /* más grande en pantallas muy anchas */
+  #mainNav .navbar-nav .nav-link {
+    font-size: 1.12rem;
+  }
+}
+
+
+
+/* Link activo */
+#mainNav .navbar-nav .nav-link.active {
+  position: relative;
+  color: #ffc800 !important;  /* amarillo inca */
+  font-weight: 900;
+}
+
+/* Subrayado */
+#mainNav .navbar-nav .nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;        
+  width: 100%;
+  height: 3px;         
+  background-color: #ffc800; 
+  border-radius: 2px;
+}
+
+/* Puntito indicador al lado del link activo */
+#mainNav .navbar-nav .nav-link.active::before {
+  content: "●"; /* puedes usar también "◉", "👉", etc */
+  position: absolute;
+  left: -14px; /* lo mueve un poquito a la izquierda */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffc800;
+  font-size: 0.9rem;
+}
+
+/* Hover y focus */
+#mainNav .navbar-nav .nav-link:hover,
+#mainNav .navbar-nav .nav-link:focus {
+  color: var(--bs-navbar-hover-color) !important;
+}
+
+/* Activo o desplegado */
+#mainNav .navbar-nav .nav-link.active,
+#mainNav .navbar-nav .show > .nav-link {
+  font-weight: 900;  
+}
+
+
+/* Dropdown (si lo usas) */
+#mainNav .navbar-nav .dropdown-menu {
   position: static;
 }
 
-.navbar-text {
+/* Texto suelto en navbar (si lo usas) */
+#mainNav .navbar-text {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   color: var(--bs-navbar-color);
 }
-.navbar-text a,
-.navbar-text a:hover,
-.navbar-text a:focus {
+#mainNav .navbar-text a,
+#mainNav .navbar-text a:hover,
+#mainNav .navbar-text a:focus {
   color: var(--bs-navbar-active-color);
 }
+
 
 .navbar-collapse {
   flex-basis: 100%;
@@ -3854,7 +3930,7 @@ textarea.form-control-lg {
 }
 
 .navbar-nav-scroll {
-  max-height: var(--bs-scroll-height, 75vh);
+  max-height: var(--bs-scroll-height, 120vh);
   overflow-y: auto;
 }
 
@@ -10896,8 +10972,11 @@ p {
   text-transform: uppercase;
 }
 #mainNav .navbar-brand img {
-  height: 1.5rem;
+  height: 80px !important; /* fuerza el tamaño que tú quieras */
+  width: auto; /* mantiene proporción */
 }
+
+
 #mainNav .navbar-nav .nav-item .nav-link {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.95rem;
@@ -10944,8 +11023,8 @@ p {
   }
 }
 header.masthead {
-  padding-top: 10.5rem;
-  padding-bottom: 6rem;
+  padding-top: 5.5rem;
+  padding-bottom: 4rem;
   text-align: center;
   color: #fff;
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../assets/img/fondo.png");
@@ -10954,39 +11033,35 @@ header.masthead {
   background-position: center center;
   background-size: cover;
 }
-header.masthead .masthead-subheading {
-  font-size: 1.5rem;
-  font-style: italic;
-  line-height: 1.5rem;
-  margin-bottom: 25px;
-  font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
+
 header.masthead .masthead-heading {
-  font-size: 3.25rem;
-  font-weight: 700;
-  line-height: 3.25rem;
-  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 0.25rem;
+  margin-bottom: 1rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 17rem;
-    padding-bottom: 12.5rem;
+    padding-top: 12rem;   /* antes 17rem */
+    padding-bottom: 10rem; /* más compacto */
   }
+
   header.masthead .masthead-subheading {
-    font-size: 2.25rem;
-    font-style: italic;
+    font-size: 2rem;
     line-height: 2.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  header.masthead .masthead-heading {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 4.2rem;
     margin-bottom: 2rem;
   }
-  header.masthead .masthead-heading {
-    font-size: 4.5rem;
-    font-weight: 700;
-    line-height: 4.5rem;
-    margin-bottom: 4rem;
-  }
 }
+
 #portfolio .portfolio-item {
   max-width: 26rem;
   margin-left: auto;
@@ -11315,3 +11390,83 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-size: 0.9rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+.masthead-logo {
+  max-width: 800px;  /* Aumenta el valor para hacerlo más grande */
+  width: 100%;       /* Escala de forma responsiva */
+  margin: 1rem auto;
+  display: block;
+}
+
+
+@font-face {
+  font-family: 'NegritaPro';
+  src: url('/assets/fonts/NegritaPro.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.masthead-title {
+  font-family: 'NegritaPro', sans-serif;
+  font-size: 7rem;
+  color: #fff;
+
+  width: 800px;      /* ancho fijo */
+  height: 10px;     /* alto fijo */
+  display: flex;     /* activa flexbox */
+  align-items: center;   /* centra verticalmente */
+  justify-content: center; /* centra horizontalmente */
+  text-align: center;
+  margin: 0 auto;    /* centra la caja en la pantalla */
+  margin-bottom: 4.5rem;
+
+  opacity: 0;
+  animation: fadeInUp 1.5s ease forwards; /* 1.5s de animación */
+}
+
+/* --- Animación máquina de escribir --- */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.masthead-subheading {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: #ffd700;
+  margin-bottom: 2rem;
+
+  /* efecto typing */
+  overflow: hidden;      /* oculta lo que aún no se "escribe" */
+  white-space: nowrap;   /* todo en una sola línea */
+  border-right: 0px solid #ffd700; /* cursor */
+  width: 0;
+  display: inline-block;
+
+  animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+  animation-delay: 1.6s; /* espera a que termine el título */
+}
+
+.masthead-logo {
+  max-width: 250px; /* ajusta el tamaño del chasqui */
+  height: auto;     /* se adapta proporcional */
+  margin: 0 auto 2rem auto; /* centrado + espacio inferior */
+  display: block;
+}
+
