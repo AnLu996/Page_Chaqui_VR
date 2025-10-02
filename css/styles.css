@@ -33,6 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  filter: brightness(1.8) contrast(1.1);
   text-align: center;
 }
 
@@ -11562,6 +11563,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 }
 
 /* Gradiente */
+/* Sin overlay por defecto */
 .chasqui-carousel-section .chasqui-item:after {
   content: "";
   display: block;
@@ -11570,8 +11572,15 @@ section#contact form#contactForm :-ms-input-placeholder {
   width: 100%;
   left: 0;
   top: 0;
+  background: none;  /* sin gradiente */
+  transition: all 0.4s ease-in-out;
+}
+
+/* Gradiente solo cuando está activa */
+.chasqui-carousel-section .chasqui-item.active:after {
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 }
+
 
 /* Descripción de la tarjeta */
 .chasqui-carousel-section .chasqui-item-desc {
@@ -11610,3 +11619,246 @@ section#contact form#contactForm :-ms-input-placeholder {
 }
 /******** Carousel section CSS End ******/
 
+
+/* COMO SE JUEGA O DE QUE TRATA INICIO */
+.page-section-unique {
+  padding:3rem 0;
+}
+.unique-container {
+  margin: 40px 200px;
+  width:  800px;
+  height: auto;
+  min-height: 600px;  
+  background: #f5f5f5;
+  box-shadow: 0 30px 50px #dbdbdb;
+  border-radius: 20px;
+  position: relative;
+  padding: 20px;
+}
+
+.unique-container .unique-slide {
+  border-radius: 20px;
+}
+.unique-container .unique-slide .unique-item {
+  width: 600px;
+  height: 450px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  border-radius: 20px;
+  box-shadow: 0 30px 50px #505050;
+  background-position: 50% 50%;
+  background-size: cover;
+  display: inline-block;
+  transition: all 0.5s;
+}
+
+/* Posiciones de los slides */
+.unique-slide .unique-item:nth-child(1),
+.unique-slide .unique-item:nth-child(2) {
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s;
+}
+
+.unique-slide .unique-item:nth-child(3) {
+  left: 50%;
+}
+.unique-slide .unique-item:nth-child(4) {
+  left: calc(50% + 220px);
+}
+.unique-slide .unique-item:nth-child(5) {
+  left: calc(50% + 440px);
+}
+
+.unique-slide .unique-item:nth-child(n + 6) {
+  left: calc(50% + 660px);
+  opacity: 0;
+}
+
+.unique-item {
+  position: relative;   /* referencia para que la img absoluta no se salga */
+  overflow: hidden;     /* evita que la imagen se desborde */
+  border-radius: 15px;
+}
+
+/* Texto dentro */
+.unique-item .unique-content {
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  width: 300px;
+  text-align: left;
+  color: #eee;
+  transform: translate(0, -50%);
+  font-family: system-ui;
+  display: none;
+  z-index: 3;
+}
+
+.unique-slide .unique-item:nth-child(2) .unique-content {
+  display: block;
+}
+
+.unique-content .unique-name {
+  font-size: 40px;
+  text-transform: uppercase;
+  font-weight: bold;
+  opacity: 0;
+  animation: unique-animate 1s ease-in-out 1 forwards;
+}
+
+.unique-content .unique-des {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: unique-animate 1s ease-in-out 0.3s 1 forwards;
+}
+
+.unique-content button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.673);
+  transition: all 0.5s;
+  animation: unique-animate 1s ease-in-out 0.6s 1 forwards;
+}
+
+.unique-content button:hover {
+  background-color: rgb(255, 255, 255);
+}
+
+/* Animación */
+@keyframes unique-animate {
+  from {
+    opacity: 0;
+    transform: translate(0, 100px);
+    filter: blur(33px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0);
+    filter: blur(0);
+  }
+}
+
+/* Botones de navegación */
+.unique-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  left: 45%;
+  right: 50%;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+}
+
+.unique-buttons button {
+  width: 40px;
+  height: 35px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin: 0 5px;
+  border: 2px solid #000000bd;
+  transition: 0.3s;
+  background: rgba(255, 255, 255, 0.578);
+}
+
+.unique-buttons button:hover {
+  color: #000000;
+  border: 2px solid #ffffffbd;
+  transform: scale(1.1);
+}
+.unique-buttons button:focus {
+  transform: scale(1.1);
+  background: #ffffff;
+  border: 2px solid #ffffffbd;
+}
+.unique-buttons button:active {
+  transform: scale(1.02);
+}
+
+.unique-next {
+  padding: 0 0 0 3px;
+}
+.unique-prev {
+  padding: 0 3px 0 0;
+}
+
+/* Marca de autor */
+.unique-credit {
+  z-index: 4444;
+  position: fixed;
+  bottom: 5%;
+  left: 2%;
+}
+
+.unique-credit a {
+  text-decoration: none;
+  border-bottom: 1px dashed rgb(44, 44, 44);
+  border-top: 1px dashed rgb(44, 44, 44);
+  padding: 4px 0;
+  color: rgba(44, 44, 44, 0.525);
+  font-family: monospace;
+  font-style: italic;
+  font-size: 1.1em;
+  transition: all 0.5s;
+}
+
+.unique-credit a:hover {
+  color: #000000;
+}
+
+.unique-img {
+  position: absolute;   /* ocupa toda la caja del contenedor */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* que se recorte bien sin deformarse */
+  border-radius: 15px;
+  z-index: 1;           /* debajo del texto */
+}
+
+.unique-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3); /* negro con 50% de opacidad */
+  border-radius: 15px;
+  z-index: 2; /* encima de la imagen */
+}
+
+/* FIIIIIIIIIIIIIIIN */
+
+
+.timeline-image {
+  width: 150px;        /* tamaño fijo del círculo */
+  height: 150px;
+  border-radius: 50%;  /* asegura el círculo */
+  overflow: hidden;    /* recorta lo que sobresale */
+  margin: 0 auto;      /* centra la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* recorta la imagen para llenar el círculo */
+}

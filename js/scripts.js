@@ -35,6 +35,21 @@ $(document).ready(function () {
 });
 
 
+"use strict";
+
+let next = document.querySelector(".unique-next");
+let prev = document.querySelector(".unique-prev");
+
+next.addEventListener("click", function () {
+  let items = document.querySelectorAll(".unique-item");
+  document.querySelector(".unique-slide").appendChild(items[0]);
+});
+
+prev.addEventListener("click", function () {
+  let items = document.querySelectorAll(".unique-item");
+  document.querySelector(".unique-slide").prepend(items[items.length - 1]);
+});
+
 
 
 
