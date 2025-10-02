@@ -11026,7 +11026,7 @@ header.masthead {
   min-height: 100vh; /* siempre ocupa el alto de la pantalla */
   text-align: center;
   color: #fff;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../assets/img/fondo.png");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../assets/img/fondo.png");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
