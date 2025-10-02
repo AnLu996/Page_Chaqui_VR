@@ -17,3 +17,24 @@ window.addEventListener("scroll", function () {
   });
 
 
+$(".chasqui-carousel").owlCarousel({
+  loop: false,     // evita bucle infinito
+  margin: 5,       // 🔑 igual que en CSS
+  responsive: {
+    0: { items: 1 },
+    600: { items: 2 },
+    1000: { items: 4 }
+  }
+});
+
+$(document).ready(function () {
+  $(".chasqui-carousel .chasqui-item").click(function () {
+    $(".chasqui-carousel .chasqui-item").not($(this)).removeClass("active");
+    $(this).toggleClass("active");
+  });
+});
+
+
+
+
+

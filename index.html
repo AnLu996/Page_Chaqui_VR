@@ -14,6 +14,16 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 
     <!-- Core theme CSS (Bootstrap) -->
     <link href="css/styles.css" rel="stylesheet" />
@@ -57,9 +67,8 @@
         </div>
         </header>
 
-
         <!-- Historia -->
-        <section class="page-section" id="historia">
+        <section class="chasqui-carousel-section" id="historia">
         <div class="container text-center">
             <h2 class="section-heading">Nuestra Historia</h2>
             <p class="text-muted">
@@ -69,39 +78,62 @@
             con la transmisión cultural, revalorizando la identidad peruana 
             a través de la experiencia de los mensajeros del Tahuantinsuyo.
             </p>
-            <ul class="timeline text-start">
-            <li>
-                <strong>Presentación de la idea:</strong> Partimos del 
-                <em>problema del sedentarismo y la pérdida de interés cultural</em>. 
-                Nuestra propuesta fue un <b>endless runner en VR</b> inspirado en 
-                los chasquis, donde correr en el sitio y moverse físicamente 
-                sirviera para avanzar en el juego:contentReference[oaicite:0]{index=0}.
-            </li>
-            <li>
-                <strong>Desarrollo del prototipo:</strong> Creamos un modelo inicial 
-                con <b>movimiento básico, saltos, agachadas y gestos</b>. 
-                El objetivo era comprobar la viabilidad de las interacciones 
-                físicas dentro de un entorno 360° del Qhapaq Ñan:contentReference[oaicite:1]{index=1}.
-            </li>
-            <li>
-                <strong>Juego final:</strong> Se añadieron mecánicas más complejas 
-                como el uso de la <b>voz para soplar el pututo</b> (boost de velocidad), 
-                rutas alternativas con atajos exigentes, y una 
-                <b>narración cultural</b> que relata anécdotas e historias de los chasquis. 
-                Cada nivel concluye en una <b>posta inca</b>, donde se entrega el quipu 
-                y se obtiene puntuación:contentReference[oaicite:2]{index=2}.
-            </li>
-            <li>
-                <strong>Pruebas con usuarios:</strong> Tanto el prototipo como la versión 
-                final fueron probados con jóvenes y adolescentes. 
-                Gracias a su feedback, se ajustaron la <b>sensibilidad de los controles</b>, 
-                la <b>inmersión visual</b> y se reforzó la integración cultural. 
-                Los jugadores destacaron la motivación para ejercitarse y 
-                aprender historia mientras jugaban:contentReference[oaicite:3]{index=3}.
-            </li>
-            </ul>
+            <div class="owl-carousel chasqui-carousel owl-theme">
+                
+                <!-- Idea -->
+                <div class="chasqui-item active" style="background-image: url('assets/img/idea.jpg');">
+                <div class="chasqui-item-desc">
+                    <h3>Presentación de la idea</h3>
+                    <p>
+                    Partimos del <em>problema del sedentarismo y la pérdida de interés cultural</em>. 
+                    Nuestra propuesta fue un <b>endless runner en VR</b> inspirado en los chasquis, 
+                    donde correr en el sitio y moverse físicamente sirviera para avanzar en el juego.
+                    </p>
+                </div>
+                </div>
+
+                <!-- Prototipo -->
+                <div class="chasqui-item" style="background-image: url('assets/img/prototipo.jpg');">
+                <div class="chasqui-item-desc">
+                    <h3>Desarrollo del prototipo</h3>
+                    <p>
+                    Creamos un modelo inicial con <b>movimiento básico, saltos, agachadas y gestos</b>. 
+                    El objetivo era comprobar la viabilidad de las interacciones físicas dentro 
+                    de un entorno 360° del <b>Qhapaq Ñan</b>.
+                    </p>
+                </div>
+                </div>
+
+                <!-- Juego Final -->
+                <div class="chasqui-item" style="background-image: url('assets/img/juego-final.jpg');">
+                <div class="chasqui-item-desc">
+                    <h3>Juego final</h3>
+                    <p>
+                    Se añadieron mecánicas como el <b>uso de la voz para soplar el pututo</b>, 
+                    rutas alternativas con atajos exigentes, y una <b>narración cultural</b> que 
+                    relata anécdotas e historias de los chasquis. 
+                    Cada nivel concluye en una <b>posta inca</b>, donde se entrega el quipu.
+                    </p>
+                </div>
+                </div>
+
+                <!-- Pruebas con Usuarios -->
+                <div class="chasqui-item" style="background-image: url('assets/img/pruebas.jpg');">
+                <div class="chasqui-item-desc">
+                    <h3>Pruebas con usuarios</h3>
+                    <p>
+                    Tanto el prototipo como la versión final fueron probados con jóvenes y adolescentes. 
+                    Ajustamos la <b>sensibilidad de los controles</b>, reforzamos la <b>inmersión visual</b> 
+                    y mejoramos la integración cultural. 
+                    Los jugadores destacaron la motivación para ejercitarse y aprender historia mientras jugaban.
+                    </p>
+                </div>
+                </div>
+
+            </div>
         </div>
         </section>
+
 
         <!-- Gameplay-->
         <section class="page-section bg-light" id="gameplay">

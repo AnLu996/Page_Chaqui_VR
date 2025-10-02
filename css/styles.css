@@ -11,6 +11,12 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+/******* Fonts Import Start **********/
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+/********* Fonts Face CSS End **********/
+
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -10972,7 +10978,7 @@ p {
   text-transform: uppercase;
 }
 #mainNav .navbar-brand img {
-  height: 80px !important; /* fuerza el tamaño que tú quieras */
+  height: 60px !important; /* fuerza el tamaño que tú quieras */
   width: auto; /* mantiene proporción */
 }
 
@@ -11479,4 +11485,92 @@ section#contact form#contactForm :-ms-input-placeholder {
   margin: 0 auto 2rem auto; /* centrado + espacio inferior */
   display: block;
 }
+
+
+/******* Carousel section CSS Start ******/
+.chasqui-carousel-section {
+  padding: 60px 50px;
+  overflow: hidden; /* evita scroll horizontal */
+}
+
+/* Contenedor de los items */
+.chasqui-carousel-section .owl-stage {
+  margin: 15px 0;
+  display: flex;
+  align-items: stretch;
+  transition: all 0.4s ease-in-out;
+}
+
+/* Estilo base de cada tarjeta */
+.chasqui-carousel-section .chasqui-item {
+  flex: 0 0 200px;
+  margin: 0 5px 60px;   /* 🔑 solo 5px de separación lateral */
+  height: 400px;
+  display: flex;
+  align-items: flex-end;
+  background: #343434 no-repeat center center / cover;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+
+/* Cuando está activo */
+.chasqui-carousel-section .chasqui-item.active {
+  flex: 0 0 320px;   /* 🔑 crece un poquito más */
+  height: 420px;     /* 🔑 también un poco más alto */
+  z-index: 2;
+  box-shadow: 12px 30px 30px rgba(0,0,0,0.25);
+}
+
+/* Gradiente */
+.chasqui-carousel-section .chasqui-item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+}
+
+/* Descripción de la tarjeta */
+.chasqui-carousel-section .chasqui-item-desc {
+  padding: 0 24px 40px;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transform: translateY(calc(100% - 54px));
+  transition: all 0.4s ease-in-out;
+}
+
+/* Visible al activar */
+.chasqui-carousel-section .chasqui-item.active .chasqui-item-desc {
+  transform: none;
+}
+
+/* Texto oculto */
+.chasqui-carousel-section .chasqui-item-desc p {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: all 0.4s ease-in-out 0.2s;
+}
+
+/* Texto aparece */
+.chasqui-carousel-section .chasqui-item.active .chasqui-item-desc p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dots */
+.chasqui-carousel-section .owl-theme.chasqui-carousel .owl-dots {
+  margin-top: -20px;
+  position: relative;
+  z-index: 5;
+}
+/******** Carousel section CSS End ******/
 
