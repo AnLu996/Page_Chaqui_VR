@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SECUREPLAY — Entrenador de Seguridad Ciudadana</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #0f2027;
+      background: linear-gradient(135deg, #2c5364, #203a43, #0f2027);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: url('fondo_seguridad.jpg') center/cover no-repeat;
+      position: relative;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    header h1, header h2, header a {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 3em;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    h2 {
+      margin-top: 15px;
+      font-weight: 400;
+      font-size: 1.2em;
+    }
+
+    a.btn {
+      display: inline-block;
+      margin-top: 25px;
+      background: #00b4db;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    a.btn:hover {
+      background: #0083b0;
+    }
+
+    section {
+      padding: 60px 15%;
+    }
+
+    .objetivos, .funcionalidades {
+      background-color: rgba(255,255,255,0.05);
+      margin-bottom: 50px;
+      border-radius: 12px;
+      padding: 30px;
+    }
+
+    h3 {
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: #00b4db;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin: 8px 0;
+      padding-left: 15px;
+      border-left: 3px solid #00b4db;
+    }
+
+    /* Sección de entrevistas */
+    .entrevistas {
+      text-align: center;
+    }
+
+    .video-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    iframe {
+      width: 420px;
+      height: 240px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255,255,255,0.05);
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>SECUREPLAY</h1>
+    <h2>Entrenador virtual de seguridad ciudadana basado en simulaciones interactivas</h2>
+    <a href="#descripcion" class="btn">Conoce más</a>
+  </header>
+
+  <section id="descripcion">
+    <div class="objetivos">
+      <h3>Objetivo General</h3>
+      <p>Entrenar a jóvenes y adultos ante situaciones comunes de inseguridad urbana en el Perú, utilizando un sistema interactivo de simulación.</p>
+    </div>
+
+    <div class="objetivos">
+      <h3>Objetivos Específicos</h3>
+      <ul>
+        <li>Interactuar con escenarios de robos o acoso urbano simulados.</li>
+        <li>Tomar decisiones ante cada situación con opciones realistas.</li>
+        <li>Recibir retroalimentación inmediata para mejorar la reacción y la autoprotección.</li>
+      </ul>
+    </div>
+
+    <div class="funcionalidades">
+      <h3>Características Principales</h3>
+      <ul>
+        <li>Simulación inmersiva 3D de entornos urbanos.</li>
+        <li>Interacción multimodal: gestos y voz para ejecutar acciones.</li>
+        <li>Retroalimentación visual y sonora según el desempeño.</li>
+        <li>Evaluación de tiempo de reacción y decisiones correctas.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entrevistas" id="entrevistas">
+    <h3>Entrevistas y Observaciones</h3>
+    <p>Explora algunos de los videos grabados durante las pruebas de usuario del proyecto SECUREPLAY.</p>
+
+    <div class="video-container">
+      <!-- 🔹 Reemplaza los links de ejemplo por tus videos de Google Drive -->
+      <iframe src="https://drive.google.com/file/d/1IgMSVzyPbZRMGotyBG-5Px5E_jTr_dUW/view?usp=sharing"></iframe>
+      <iframe src="https://drive.google.com/file/d/1efgh67890LMN/view?usp=sharing"></iframe>
+      <iframe src="https://drive.google.com/file/d/1ijkl09876OPQ/view?usp=sharing"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 SECUREPLAY — Proyecto de Interacción Humano Computador (UNSA)
+  </footer>
+
+</body>
+</html>
