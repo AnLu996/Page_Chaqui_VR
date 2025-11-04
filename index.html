@@ -1,678 +1,172 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="ChasquiVR - Corre como un mensajero inca en realidad virtual" />
-    <meta name="author" content="Equipo ChasquiVR" />
-    <title>Chasqui VR</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Font Awesome -->
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Owl Carousel CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantalla Dividida con Videos</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-    <!-- Owl Carousel JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    body {
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
 
+    /* ===== Pantalla de carga ===== */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+      z-index: 9999;
+      animation: fadeOut 1s ease forwards;
+      animation-delay: 1.5s;
+    }
 
-    <!-- Core theme CSS (Bootstrap) -->
-    <link href="css/styles.css" rel="stylesheet" />
-  </head>
-  <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand" href="#page-top"><img src="assets/img/navbar-logo.png" alt="..." class="navbar-logo" /></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars ms-1"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#descripcion">¿Qué es Chasqui VR?</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#historia">Historia</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#gameplay">Gameplay</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#proceso">Desarrollo</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Equipo</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Comprar</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    #loader::after {
+      content: "";
+      width: 60px;
+      height: 60px;
+      border: 5px solid white;
+      border-top: 5px solid transparent;
+      border-radius: 50%;
+      margin-top: 20px;
+      animation: spin 1s linear infinite;
+    }
 
-        <!-- Masthead -->
-        <header class="masthead">
-        <div class="container text-center">
-            
-            <!-- Texto del título -->
-            <div class="masthead-title">Chasqui VR</div>
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
-            <!-- Subtítulo -->
-            <div class="masthead-subheading">SÉ EL MENSAJERO DEL TAHUANTINSUYO</div>
-            
-            <!-- Imagen del chasqui -->
-            <img src="assets/img/chasqui.png" alt="Chasqui corriendo" class="masthead-logo img-fluid" />
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
 
-            <!-- Botón CTA -->
-            <a class="btn btn-primary btn-xl text-uppercase mt-4" href="#descripcion">Saber Más</a>
-        </div>
-        </header>
+    /* ===== Secciones principales ===== */
+    .section {
+      flex: 1;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      transition: flex 0.4s ease;
+      overflow: hidden;
+    }
 
-       <!-- Sección: ¿Qué es Chasqui VR? -->
-        <section class="page-section-unique" id="descripcion">
-        <div class="unique-container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">¿Qué es Chasqui VR?</h2>
-            </div>
-            <div class="unique-slide descripcion-slide">
-            
-            <!-- Fila 1: Qhapaq Ñan -->
-            <div class="unique-item descripcion-item">
-                <div class="unique-content">
-                <div class="unique-name">Corre por el Qhapaq Ñan</div>
-                <div class="unique-des">
-                    Recorre el <b>Qhapaq Ñan</b>, el ancestral Camino Inca que unía todo el Tahuantinsuyo.  
-                    Cada tramo representa un reto físico y cultural que conecta al jugador con la historia real.
-                </div>
-                </div>
-                <img src="assets/img/quapaqnan.png" class="unique-img" alt="Camino Inca">
-            </div>
+    /* Videos de fondo */
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.5);
+    }
 
-            <!-- Fila 2: El Chasqui -->
-            <div class="unique-item descripcion-item">
-                <div class="unique-content">
-                <div class="unique-name">Vive como un Chasqui</div>
-                <div class="unique-des">
-                    El jugador es un <b>chasqui</b>, mensajero del imperio inca.  
-                    Debe correr, saltar, agacharse y usar su cuerpo como control,  
-                    entregando quipus y sorteando obstáculos del entorno andino.
-                </div>
-                </div>
-                <img src="assets/img/chasqui.jpeg" class="unique-img" alt="Chasqui Inca">
-            </div>
+    /* Contenido encima del video */
+    .content {
+      position: relative;
+      z-index: 1;
+    }
 
-            <!-- Fila 3: Mecánicas -->
-            <div class="unique-item descripcion-item">
-                <div class="unique-content">
-                <div class="unique-name">Mecánicas principales</div>
-                <div class="unique-des">
-                    Chasqui VR combina el movimiento físico real con interacciones inmersivas en VR.  
-                    Estas son las principales mecánicas que el jugador utiliza:
-                </div>
-                <ul class="unique-list">
-                    <li><i class="fas fa-running"></i> Movimiento físico: correr, saltar y agacharse.</li>
-                    <li><i class="fas fa-microphone"></i> Voz: soplar el pututo para obtener velocidad extra.</li>
-                    <li><i class="fas fa-hand-paper"></i> Gestos: señalar rutas alternativas.</li>
-                    <li><i class="fas fa-scroll"></i> Interacciones: entregar y recibir quipus.</li>
-                </ul>
-                </div>
-                <img src="assets/img/fondo.png" class="unique-img" alt="Gameplay de Chasqui VR">
-            </div>
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    }
 
-            </div>
+    button {
+      background: white;
+      color: #333;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-            <!-- Botones (opcional si quieres carrusel aquí también) -->
-            <div class="unique-buttons">
-            <button class="unique-prev">◁</button>
-            <button class="unique-next">▷</button>
-            </div>
-        </div>
-        </section>
+    button:hover {
+      background: #333;
+      color: white;
+    }
 
+    .section:hover {
+      flex: 1.1;
+    }
 
+    /* Responsivo */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .section {
+        width: 100%;
+        height: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
 
-       <!-- Historia del Juego -->
-        <section class="chasqui-carousel-section" id="historia">
-        <div class="container text-center">
-            <h2 class="section-heading">Historia del Juego</h2>
-            <p class="text-muted">
-            En Chasqui VR el jugador revive la experiencia de los mensajeros incas recorriendo el Qhapaq Ñan. 
-            La trama sigue al chasqui desde la recepción del quipu hasta la entrega en la posta, 
-            enfrentando obstáculos y tomando decisiones clave en su misión.
-            </p>
+  <!-- Pantalla de carga -->
+  <div id="loader">ProyectoIHC</div>
 
-            <div class="owl-carousel chasqui-carousel owl-theme">
+  <!-- Lado Proyecto -->
+  <div class="section left">
+    <video autoplay muted loop>
+      <source src="assets/videos/FondoProyectoIndex.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+    <div class="content">
+      <h1>Proyecto</h1>
+      <button onclick="window.location.href='proyecto.html'">Ir al Proyecto</button>
+    </div>
+  </div>
 
-            <!-- Inicio -->
-            <div class="chasqui-item" style="background-image: url('assets/img/inicio.png');">
-                <div class="overlay"></div>
-                <div class="chasqui-item-desc">
-                <h3>Inicio</h3>
-                <p>
-                    El jugador aparece en una <b>posta inca</b>, donde recibe un quipu con el mensaje 
-                    que debe entregar antes de que el sol se oculte.
-                </p>
-                </div>
-            </div>
+  <!-- Lado Juego -->
+  <div class="section right">
+    <video autoplay muted loop>
+      <source src="assets/videos/FondoJuegoIndex.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+    <div class="content">
+      <h1>Juego</h1>
+      <button onclick="window.location.href='juego.html'">Ir al Juego</button>
+    </div>
+  </div>
 
-            <!-- Desarrollo -->
-            <div class="chasqui-item" style="background-image: url('assets/img/desarrollo.png');">
-                <div class="overlay"></div>
-                <div class="chasqui-item-desc">
-                <h3>Desarrollo</h3>
-                <p>
-                    A lo largo del <b>Qhapaq Ñan</b>, el jugador corre en el sitio, 
-                    salta y se agacha para esquivar obstáculos como troncos y piedras, 
-                    elige rutas con gestos y usa la <b>voz para soplar el pututo</b>.
-                </p>
-                </div>
-            </div>
+  <script>
+    // Esperar unos segundos antes de ocultar el loader
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => loader.style.display = "none", 3000);
+    });
+  </script>
 
-            <!-- Narrativa y retos -->
-            <div class="chasqui-item" style="background-image: url('assets/img/obstaculos.png');">
-                <div class="overlay"></div>
-                <div class="chasqui-item-desc">
-                <h3>Narrativa y Retos</h3>
-                <p>
-                    El recorrido está acompañado de una <b>narración cultural</b> que relata 
-                    historias de los chasquis y el Tahuantinsuyo, generando un aprendizaje 
-                    mientras se superan los desafíos.
-                </p>
-                </div>
-            </div>
-
-            <!-- Final -->
-            <div class="chasqui-item" style="background-image: url('assets/img/final.png');">
-                <div class="overlay"></div>
-                <div class="chasqui-item-desc">
-                <h3>Final</h3>
-                <p>
-                    Cada tramo termina en una posta inca, donde el chasqui <b>entrega el quipu</b> 
-                    y recibe una puntuación según su velocidad, precisión y decisiones.
-                </p>
-                </div>
-            </div>
-
-            </div>
-        </div>
-        </section>
-
-
-        <!-- Gameplay-->
-        <section class="page-section bg-light" id="gameplay">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Gameplay</h2>
-                    <h3 class="section-subheading text-muted">Vive la experiencia de ser un chasqui: corre, salta, esquiva y usa tu voz para completar tu misión.</h3>
-                </div>
-                <div class="row text-center">
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-running fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Movimiento físico</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-hand-paper fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Gestos</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <span class="fa-stack fa-4x">
-                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-microphone fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="my-3">Voz</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Proceso -->
-        <section class="page-section" id="proceso">
-        <div class="container">
-            <div class="text-center">
-            <h2 class="section-heading text-uppercase">Proceso de Desarrollo</h2>
-            <h3 class="section-subheading text-muted">Desde la idea inicial hasta las pruebas con usuarios.</h3>
-            </div>
-            <ul class="timeline">
-            <li>
-                <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="assets/img/idea.png" alt="Idea inicial" />
-                </div>
-                <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4>Fase 1</h4>
-                    <h4 class="subheading">Idea Inicial</h4>
-                </div>
-                <div class="timeline-body">
-                    <p class="text-muted">
-                    Identificamos el problema del sedentarismo juvenil y la necesidad de revalorizar la cultura inca. 
-                    Así nació la propuesta de un videojuego en VR inspirado en los chasquis.
-                    </p>
-                </div>
-                </div>
-            </li>
-
-            <li class="timeline-inverted">
-                <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="assets/img/prototipo.jpg" alt="Prototipo" />
-                </div>
-                <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4>Fase 2</h4>
-                    <h4 class="subheading">Prototipo</h4>
-                </div>
-                <div class="timeline-body">
-                    <p class="text-muted">
-                    Creamos un modelo inicial con movimientos básicos, saltos y gestos. 
-                    El objetivo era validar la jugabilidad en un entorno virtual del Qhapaq Ñan.
-                    </p>
-                </div>
-                </div>
-            </li>
-
-            <li>
-                <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="assets/img/juego-final.png" alt="Juego Final" />
-                </div>
-                <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4>Fase 3</h4>
-                    <h4 class="subheading">Juego Final</h4>
-                </div>
-                <div class="timeline-body">
-                    <p class="text-muted">
-                    Incorporamos nuevas mecánicas como el uso de la voz, rutas alternativas 
-                    y narraciones culturales para reforzar la experiencia inmersiva.
-                    </p>
-                </div>
-                </div>
-            </li>
-
-            <li class="timeline-inverted">
-                <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="assets/img/pruebas.jpg" alt="Pruebas con usuarios" />
-                </div>
-                <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4>Fase 4</h4>
-                    <h4 class="subheading">Pruebas con Usuarios</h4>
-                </div>
-                <div class="timeline-body">
-                    <p class="text-muted">
-                    Probamos el juego con jóvenes, ajustamos la sensibilidad de los controles 
-                    y mejoramos la inmersión visual y cultural en base a su retroalimentación.
-                    </p>
-                </div>
-                </div>
-            </li>
-            </ul>
-        </div>
-        </section>
-        
-        <!-- Team-->
-        <section class="page-section bg-light" id="team">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Nosotras</h2>
-                    <h3 class="section-subheading text-muted">Presentamos al increíble equipo que nos ayudó con la creación de Chaqui_VR</h3>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/2.jpg" alt="..." />
-                            <h4>Melany Cahuana</h4>
-                            <p class="text-muted">Lead Marketer</p>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Twitter Profile"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/3.jpg" alt="..." />
-                            <h4>Andrea Cuela</h4>
-                            <p class="text-muted">Lead Developer</p>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/3.jpg" alt="..." />
-                            <h4>Merisabel Ruelas</h4>
-                            <p class="text-muted">Lead Developer</p>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." />
-                            <h4>Rushell Zavalaga</h4>
-                            <p class="text-muted">Lead Designer</p>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Twitter Profile"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p></div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Comprar el juego</h2>
-                    <h3 class="section-subheading text-muted">Juega ChasquiVR y diviértete con nosotros</h3>
-                </div>
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- * * SB Forms Contact Form * *-->
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- This form is pre-integrated with SB Forms.-->
-                <!-- To make this form functional, sign up at-->
-                <!-- https://startbootstrap.com/solution/contact-forms-->
-                <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                    <div class="row align-items-stretch mb-5">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <!-- Name input-->
-                                <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                            </div>
-                            <div class="form-group">
-                                <!-- Email address input-->
-                                <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <div class="form-group mb-md-0">
-                                <!-- Phone number input-->
-                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-textarea mb-md-0">
-                                <!-- Message input-->
-                                <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center text-white mb-3">
-                            <div class="fw-bolder">Form submission successful!</div>
-                            To activate this form, sign up at
-                            <br />
-                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                        </div>
-                    </div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                    <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
-                </form>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer py-4">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 text-lg-start">&copy; Chaqui_VR</div>
-                    <div class="col-lg-4 my-3 my-lg-0">
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <div class="col-lg-4 text-lg-end">
-                        <!-- <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a> -->
-                        <!-- <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>> -->
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Portfolio Modals-->
-        <!-- Portfolio item 1 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Threads
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Illustration
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 2 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Explore
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Graphic Design
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 3 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/3.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Finish
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Identity
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 4 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/4.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Lines
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Branding
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 5 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/5.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Southwest
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Website Design
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 6 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/6.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Window
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Photography
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
+</body>
 </html>
