@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chasqui VR — Libro/Ruleta horizontal</title>
-  <meta name="description" content="Corre por tus Notas! - Navegación tipo libro y ruleta" />
+  <title>Corre por tus Notas — Libro/Ruleta horizontal</title>
+  <meta name="description" content="Corre por tus Notas - Endless Runner urbano en VR" />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <style>
     :root{--bg:#0b1020;--surface:#0b1224;--ring:#334155;--text:#e5e7eb;--muted:#94a3b8;--primary:#22d3ee;--accent:#a78bfa;}
@@ -12,7 +12,6 @@
     html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 20% -10%, #1f2937 0%, #0f172a 50%, #0b1020 100%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Inter,Roboto,Ubuntu,Arial,sans-serif}
     body{overflow:hidden}
 
-    /* NAV superior minimal */
     .topbar{position:fixed;inset:12px 12px auto 12px;display:flex;align-items:center;gap:10px;z-index:30}
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800}
     .brand img{height:28px}
@@ -21,7 +20,6 @@
     .chip{border:1px solid var(--ring);border-radius:999px;padding:8px 12px;color:var(--muted);text-decoration:none;background:#0b1224aa;backdrop-filter:blur(6px)}
     .chip.active{background:linear-gradient(135deg,var(--primary),var(--accent));color:#0a0a0a;font-weight:800}
 
-    /* CONTENEDOR tipo libro */
     .stage{position:relative;width:100vw;height:100vh;perspective:1600px;overflow:hidden}
     .book{position:absolute;inset:0;transform-style:preserve-3d}
     .page{position:absolute;inset:0;padding:80px 10vw 64px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;border:1px solid var(--ring);border-radius:22px;background:linear-gradient(180deg,#0b1224 0%,#0b1224ee 50%,#0b1224cc 100%);box-shadow:0 30px 80px #000a;transform-origin:left center;backface-visibility:hidden}
@@ -33,16 +31,13 @@
     .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ring);padding:12px 16px;border-radius:12px;background:#0b1224;color:var(--text);text-decoration:none}
     .btn.primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#0a0a0a;font-weight:800}
 
-    /* Animación de paso */
     .enter{animation:flipIn .65s cubic-bezier(.22,1,.36,1)}
     @keyframes flipIn{from{transform:rotateY(-90deg);opacity:.0}to{transform:rotateY(0);opacity:1}}
 
-    /* CONTROLES izquierda/derecha */
     .arrows{position:fixed;inset:auto 0 24px 0;display:flex;justify-content:center;gap:16px;z-index:25}
     .circle{width:56px;height:56px;border-radius:999px;border:1px solid var(--ring);background:#0b1224cc;backdrop-filter:blur(6px);display:grid;place-items:center;cursor:pointer;user-select:none}
     .circle:active{transform:scale(.98)}
 
-    /* RULETA mini (selector de secciones) */
     .wheelDock{position:fixed;right:16px;bottom:16px;z-index:35;display:grid;gap:6px;justify-items:end}
     canvas{width:140px;height:140px;border-radius:50%;border:1px solid var(--ring);background:#0a0f1f;box-shadow:inset 0 0 50px #0006, 0 10px 30px #0008}
     .pointer{position:absolute;top:-6px;right:16px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:20px solid var(--primary);filter:drop-shadow(0 4px 10px #000a)}
@@ -66,15 +61,15 @@
       <a class="chip" data-i="1">¿Qué es?</a>
       <a class="chip" data-i="2">Historia</a>
       <a class="chip" data-i="3">Gameplay</a>
-      <a class="chip" data-i="4">Proceso</a>
+      <a class="chip" data-i="4">Desarrollo</a>
       <a class="chip" data-i="5">Equipo</a>
-      <a class="chip" data-i="6">Comprar</a>
+      <a class="chip" data-i="6">Contacto</a>
     </nav>
   </div>
 
   <!-- ESCENARIO libro -->
   <div class="stage" aria-live="polite" aria-atomic="true">
-    <div class="book" id="book"><!-- páginas se inyectan --></div>
+    <div class="book" id="book"></div>
   </div>
 
   <!-- Flechas -->
@@ -91,43 +86,61 @@
   </div>
 
   <script>
-    // ==== Datos de secciones (contenido resumido de tus bloques) ====
     const PAGES = [
       {
-        title:'Chasqui VR', subtitle:'SÉ EL MENSAJERO DEL TAHUANTINSUYO',
-        body:`Corre por el Qhapaq Ñan y vive la velocidad de los chasquis en VR.`,
-        img:'assets/img/chasqui.png',
-        cta:[{text:'Saber más', to:1, primary:true},{text:'Ver historia', to:2}]
+        title:'Corre por tus Notas!',
+        subtitle:'EL ENDLESS RUNNER QUE TE LLEVARÁ AL COLEGIO… A TIEMPO',
+        body:`Despierta tarde, ponte los zapatos y ¡corre por tu examen! Esquiva autos, bolsas de basura y peatones para llegar a clases antes de que suene la campana.`,
+        img:'assets/img/corre_inicio.png',
+        cta:[{text:'Descubre más', to:1, primary:true},{text:'Ver gameplay', to:3}]
       },
       {
-        title:'¿Qué es Chasqui VR?', subtitle:'Qhapaq Ñan, chasquis y mecánicas',
-        body:`Recorre el <b>Qhapaq Ñan</b>, entrega <b>quipus</b> y usa movimiento físico, voz y gestos.`,
-        img:'assets/img/fondo.png'
+        title:'¿Qué es Corre por tus Notas?',
+        subtitle:'Un juego urbano de reflejos e ingenio',
+        body:`Corre por tus Notas es un <b>juego tipo endless runner</b> ambientado en una ciudad moderna. 
+        Controlas a un estudiante que se quedó dormido y debe llegar a su examen esquivando <b>carros, bolsas de basura y obstáculos urbanos</b>. 
+        ¡Cada segundo cuenta!`,
+        img:'assets/img/quees.png'
       },
       {
-        title:'Historia', subtitle:'De posta a posta',
-        body:`Inicio: recibes el quipu. Desarrollo: corres, saltas y soplas el <b>pututo</b>. Final: entregas y eres puntuado.`,
+        title:'Historia',
+        subtitle:'El día más importante del colegio',
+        body:`Un chico se despierta tarde el día de su examen final.  
+        Con la mochila a medio cerrar, sale corriendo por las calles de la ciudad.  
+        Entre tráfico, vendedores y basura en las veredas, deberá llegar al colegio a tiempo para salvar su nota.`,
+        img:'assets/img/historia.png'
+      },
+      {
+        title:'Gameplay',
+        subtitle:'Esquiva, salta y corre sin parar',
+        body:`🏃‍♂️ <b>Correr automáticamente</b> — el jugador solo esquiva y salta.<br>
+               🚗 <b>Evita autos y obstáculos</b> con reflejos rápidos.<br>
+               🗑️ <b>Salta bolsas de basura</b> y huecos en la pista.<br>
+               🎓 <b>Recolecta lápices y relojes</b> para sumar tiempo extra.<br>
+               🌆 <b>Fondo urbano</b> con sonidos reales de la ciudad.`,
+        img:'assets/img/gameplay.png'
+      },
+      {
+        title:'Desarrollo',
+        subtitle:'De la idea al prototipo jugable',
+        body:`Inspirado en los estudiantes que siempre llegan al límite.  
+        El desarrollo comenzó con pruebas de <b>física de movimiento</b> y detección de colisiones, 
+        luego se integró la <b>ambientación urbana</b> y un sistema de <b>puntuación infinita</b>.  
+        Se usaron herramientas de <b>Unity y Blender</b> para modelado y animación.`,
         img:'assets/img/desarrollo.png'
       },
       {
-        title:'Gameplay', subtitle:'Lo que harás',
-        body:`🏃‍♂️ Correr / saltar / agacharte<br>🖐️ Gestos para elegir rutas<br>📣 Voz para turbo temporal`,
-        img:'assets/img/obstaculos.png'
+        title:'Equipo',
+        subtitle:'Los creadores detrás del juego',
+        body:`Melany Cahuana · Andrea Cuela · Merisabel Ruelas · Rushell Zavalaga  
+        <br>Equipo de desarrollo de videojuegos — Proyecto académico 2025.`,
+        img:'assets/img/team/equipo.png'
       },
       {
-        title:'Proceso de desarrollo', subtitle:'Del concepto a las pruebas',
-        body:`Idea → Prototipo → Juego final → Test con usuarios. Ajustes de control e inmersión.`,
-        img:'assets/img/juego-final.png'
-      },
-      {
-        title:'Equipo', subtitle:'Nosotras',
-        body:`Melany Cahuana · Andrea Cuela · Merisabel Ruelas · Rushell Zavalaga`,
-        img:'assets/img/team/1.jpg'
-      },
-      {
-        title:'Comprar', subtitle:'¿Listx para correr?',
-        body:`Déjanos tus datos y te contactamos para acceder al juego.`,
-        img:'assets/img/inicio.png',
+        title:'Contacto',
+        subtitle:'¿Quieres probar o colaborar?',
+        body:`Déjanos tus datos y te escribiremos para probar el juego o recibir novedades.`,
+        img:'assets/img/contacto.png',
         form:true
       }
     ];
@@ -136,7 +149,6 @@
     const tabs = [...document.querySelectorAll('#tabs .chip')];
     const prevBtn = document.getElementById('prev');
     const nextBtn = document.getElementById('next');
-
     let index = 0;
 
     function render(i){
@@ -166,21 +178,27 @@
         </div>`;
       book.appendChild(page);
 
-      // CTAs
       const ctaMount = page.querySelector('#cta');
       if(ctaMount && p.cta){
         p.cta.forEach(c=>{
-          const a=document.createElement('a'); a.href='#'; a.className='btn'+(c.primary?' primary':''); a.textContent=c.text; a.onclick=(e)=>{e.preventDefault(); go(c.to)}; ctaMount.appendChild(a);
+          const a=document.createElement('a'); 
+          a.href='#'; 
+          a.className='btn'+(c.primary?' primary':''); 
+          a.textContent=c.text; 
+          a.onclick=(e)=>{e.preventDefault(); go(c.to)}; 
+          ctaMount.appendChild(a);
         })
       }
 
-      // Form
       const form = page.querySelector('#contactForm');
       if(form){
-        form.addEventListener('submit', e=>{e.preventDefault(); page.querySelector('#msg').textContent='¡Gracias! Te contactaremos pronto.'; form.reset();});
+        form.addEventListener('submit', e=>{
+          e.preventDefault();
+          page.querySelector('#msg').textContent='¡Gracias! Te contactaremos pronto.';
+          form.reset();
+        });
       }
 
-      // Nav active
       tabs.forEach((t,k)=>t.classList.toggle('active', k===index));
       drawWheel();
       updateButtons();
@@ -199,32 +217,29 @@
     nextBtn.addEventListener('click', next);
     tabs.forEach(t=> t.addEventListener('click', ()=> go(+t.dataset.i)) );
 
-    // Teclado y rueda del mouse → paginado horizontal
     document.addEventListener('keydown', (e)=>{
       if(['ArrowRight','PageDown'].includes(e.key)) next();
       if(['ArrowLeft','PageUp'].includes(e.key)) prev();
       if(e.key==='Home') go(0);
       if(e.key==='End') go(PAGES.length-1);
     });
-    let wheelLock=false; // evita múltiples pasos con una rueda fuerte
+    let wheelLock=false;
     window.addEventListener('wheel', (e)=>{
       if(wheelLock) return; wheelLock=true;
       (e.deltaY>0 || e.deltaX>0) ? next() : prev();
       setTimeout(()=>wheelLock=false, 280);
     }, {passive:true});
 
-    // ==== MINI RULETA ==== 
     const wheel = document.getElementById('wheel');
     const ctx = wheel.getContext('2d');
     function drawWheel(){
       const W=wheel.width, H=wheel.height; const R=Math.min(W,H)/2 - 8; const n=PAGES.length; const step=Math.PI*2/n;
-      ctx.clearRect(0,0,W,H); ctx.save(); ctx.translate(W/2,H/2); ctx.rotate(-Math.PI/2); // 0° arriba
+      ctx.clearRect(0,0,W,H); ctx.save(); ctx.translate(W/2,H/2); ctx.rotate(-Math.PI/2);
       for(let i=0;i<n;i++){
         ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,R,i*step,(i+1)*step); ctx.closePath();
         const hue = (i*(360/n))%360; ctx.fillStyle = `hsl(${hue} 70% ${i===index?45:30}%)`; ctx.fill();
         ctx.strokeStyle = '#0b1224'; ctx.lineWidth=2; ctx.stroke();
       }
-      // etiquetas mínimas
       ctx.rotate(step/2);
       ctx.fillStyle='#e5e7eb'; ctx.font='bold 10px system-ui,sans-serif';
       for(let i=0;i<n;i++){
@@ -232,16 +247,16 @@
       }
       ctx.restore();
     }
-    // Interacción con clic/tap en ruleta
+
     wheel.addEventListener('click', (e)=>{
       const rect = wheel.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width/2; const y = e.clientY - rect.top - rect.height/2;
-      let ang = Math.atan2(y, x) + Math.PI/2; if(ang<0) ang+=Math.PI*2; // 0° arriba
+      const x = e.clientX - rect.left - rect.width/2; 
+      const y = e.clientY - rect.top - rect.height/2;
+      let ang = Math.atan2(y, x) + Math.PI/2; if(ang<0) ang+=Math.PI*2;
       const idx = Math.floor( ang / (Math.PI*2/PAGES.length) );
       go(idx);
     });
 
-    // Inicio
     render(0);
   </script>
 </body>
