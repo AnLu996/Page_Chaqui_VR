@@ -152,14 +152,14 @@
     <img src="assets/img/secureplay-logo.png" alt="Logo SECUREPLAY" class="logo">
     <h1>SECUREPLAY</h1>
     <h2>Entrenador virtual de seguridad ciudadana</h2>
-    <footer>Haz clic para continuar</footer>
+    <footer>Haz clic abajo para avanzar, arriba para retroceder</footer>
   </section>
 
   <!-- Slide 2 -->
   <section class="slide bg2">
     <h3>Introducción</h3>
     <p style="max-width:700px;">SECUREPLAY surge como una herramienta educativa que entrena la reacción ante situaciones de riesgo urbano mediante simulaciones interactivas con voz y gestos.</p>
-    <footer>Haz clic para continuar</footer>
+    <footer>Haz clic abajo para avanzar, arriba para retroceder</footer>
   </section>
 
   <!-- Slide 3 -->
@@ -170,7 +170,7 @@
       <li>• Promover conciencia situacional a través de simulación.</li>
       <li>• Evaluar tiempos de respuesta y decisiones correctas.</li>
     </ul>
-    <footer>Haz clic para continuar</footer>
+    <footer>Haz clic abajo para avanzar, arriba para retroceder</footer>
   </section>
 
   <!-- Slide 4 -->
@@ -179,7 +179,7 @@
     <p style="max-width:700px;">El usuario se enfrenta a escenarios urbanos realistas, donde sus gestos y comandos de voz determinan el resultado. Recibe retroalimentación inmediata visual y sonora.</p>
     <a href="https://drive.google.com/file/d/1IgMSVzyPbZRMGotyBG-5Px5E_jTr_dUW/view?usp=sharing" 
        target="_blank" class="btn">Ver demostración</a>
-    <footer>Haz clic para continuar</footer>
+    <footer>Haz clic abajo para avanzar, arriba para retroceder</footer>
   </section>
 
   <!-- 🧩 Slide 5: Entrevistas -->
@@ -208,12 +208,17 @@
         </div>
       </div>
     </div>
-    <footer>Haz clic para reiniciar</footer>
+    <footer>Haz clic abajo para reiniciar, arriba para volver</footer>
   </section>
 
   <script>
     const slides = document.querySelectorAll('.slide');
     let current = 0;
+
+    // Inicialización
+    slides.forEach((s, i) => {
+      if (i !== 0) s.style.transform = 'translateY(100%)';
+    });
 
     function showNextSlide() {
       slides[current].style.transform = `translateY(-100%)`;
@@ -221,11 +226,25 @@
       slides[current].style.transform = `translateY(0)`;
     }
 
-    slides.forEach((s, i) => {
-      if (i !== 0) s.style.transform = 'translateY(100%)';
-    });
+    function showPreviousSlide() {
+      slides[current].style.transform = `translateY(100%)`;
+      current = (current - 1 + slides.length) % slides.length;
+      slides[current].style.transform = `translateY(0)`;
+    }
 
-    document.body.addEventListener('click', showNextSlide);
+    // Detectar clic arriba o abajo
+    document.body.addEventListener('click', (e) => {
+      const y = e.clientY;
+      const height = window.innerHeight;
+
+      if (y < height / 2) {
+        // clic en la parte superior → retroceder
+        showPreviousSlide();
+      } else {
+        // clic en la parte inferior → avanzar
+        showNextSlide();
+      }
+    });
   </script>
 
 </body>
