@@ -15,6 +15,7 @@
     body {
       overflow: hidden;
       color: #fff;
+      background: #000; /* evita flashes en repintado */
     }
 
     .slide {
@@ -49,6 +50,8 @@
     img.logo {
       width: 350px;
       margin-bottom: 20px;
+      z-index: 3; /* por encima del overlay */
+      position: relative;
     }
 
     .btn {
@@ -60,6 +63,8 @@
       border-radius: 30px;
       font-weight: bold;
       transition: 0.3s;
+      position: relative;
+      z-index: 3;
     }
 
     .btn:hover {
@@ -72,7 +77,8 @@
       bottom: 15px;
       font-size: 0.9em;
       color: #fff;
-      opacity: 0.7;
+      opacity: 0.8;
+      z-index: 3;
     }
 
     /* 🎥 Sección de entrevistas */
@@ -143,15 +149,61 @@
     .video-btn:hover {
       background-color: #FFD54F;
     }
+
+    /* ====== Fondo Slide 1 sin flashes ====== */
+    #slide1 {
+      background: #000; /* base negra */
+      overflow: hidden;
+    }
+
+    /* dos capas de fondo que se cruzan con opacity */
+    #slide1 .bg-layer {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: opacity 1.2s ease-in-out;
+      will-change: opacity;
+      z-index: 0; /* debajo del overlay y del contenido */
+    }
+
+    /* overlay oscuro real */
+    #slide1 .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 2; /* sobre los fondos, debajo del contenido */
+    }
+
+    /* asegura que el contenido esté encima */
+    #slide1 .content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
 
   <!-- Slide 1 -->
-  <section class="slide bg1 active">
-    <img src="assets/img/secureplay-logo.png" alt="Logo SECUREPLAY" class="logo">
-    <h1>SECUREPLAY</h1>
-    <h2>Entrenador virtual de seguridad ciudadana</h2>
+  <section class="slide bg1 active" id="slide1">
+    <!-- Capas de fondo para crossfade -->
+    <div class="bg-layer" id="bgA" style="opacity:1"></div>
+    <div class="bg-layer" id="bgB" style="opacity:0"></div>
+
+    <!-- Overlay oscuro -->
+    <div class="overlay"></div>
+
+    <!-- Contenido -->
+    <div class="content">
+      <img src="assets/img/secureplay-logo.png" alt="Logo SECUREPLAY" class="logo">
+      <h1>SECUREPLAY</h1>
+      <h2>Entrenador virtual de seguridad ciudadana</h2>
+    </div>
+
     <footer>Haz clic abajo para avanzar, arriba para retroceder</footer>
   </section>
 
@@ -215,7 +267,7 @@
     const slides = document.querySelectorAll('.slide');
     let current = 0;
 
-    // Inicialización
+    // Inicialización de posiciones
     slides.forEach((s, i) => {
       if (i !== 0) s.style.transform = 'translateY(100%)';
     });
@@ -232,19 +284,56 @@
       slides[current].style.transform = `translateY(0)`;
     }
 
-    // Detectar clic arriba o abajo
+    // Clic arriba = atrás | Clic abajo = adelante
     document.body.addEventListener('click', (e) => {
       const y = e.clientY;
-      const height = window.innerHeight;
-
-      if (y < height / 2) {
-        // clic en la parte superior → retroceder
-        showPreviousSlide();
-      } else {
-        // clic en la parte inferior → avanzar
-        showNextSlide();
-      }
+      const h = window.innerHeight;
+      if (y < h / 2) showPreviousSlide();
+      else showNextSlide();
     });
+
+    /* ====== Fondo dinámico Slide 1 sin flashes ====== */
+    const slide1 = document.getElementById('slide1');
+    const bgA = document.getElementById('bgA');
+    const bgB = document.getElementById('bgB');
+
+    const fondos = [
+      'assets/img/proyecto_robos/robos1.jpg',
+      'assets/img/proyecto_robos/robos2.png',
+      'assets/img/proyecto_robos/robos3.jpg',
+      'assets/img/proyecto_robos/robos4.jpg',
+      'assets/img/proyecto_robos/robos5.png'
+    ];
+
+    // Precarga para evitar “flash”
+    const preloaded = fondos.map(src => {
+      const img = new Image();
+      img.src = src;
+      return img;
+    });
+
+    let idx = 0;
+    bgA.style.backgroundImage = `url('${fondos[idx]}')`;
+    bgB.style.backgroundImage = `url('${fondos[(idx+1)%fondos.length]}')`;
+
+    let showingA = true;
+
+    setInterval(() => {
+      idx = (idx + 1) % fondos.length;
+
+      if (showingA) {
+        // actualiza B al siguiente y hace fade-in B
+        bgB.style.backgroundImage = `url('${fondos[idx]}')`;
+        bgB.style.opacity = '1';
+        bgA.style.opacity = '0';
+      } else {
+        // actualiza A al siguiente y hace fade-in A
+        bgA.style.backgroundImage = `url('${fondos[idx]}')`;
+        bgA.style.opacity = '1';
+        bgB.style.opacity = '0';
+      }
+      showingA = !showingA;
+    }, 3500); // cambia cada 3.5s
   </script>
 
 </body>

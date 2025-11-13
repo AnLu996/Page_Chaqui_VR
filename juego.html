@@ -1,263 +1,224 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Corre por tus Notas — Libro/Ruleta horizontal</title>
-  <meta name="description" content="Corre por tus Notas - Endless Runner urbano en VR" />
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <style>
-    :root{--bg:#0b1020;--surface:#0b1224;--ring:#334155;--text:#e5e7eb;--muted:#94a3b8;--primary:#22d3ee;--accent:#a78bfa;}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 20% -10%, #1f2937 0%, #0f172a 50%, #0b1020 100%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Inter,Roboto,Ubuntu,Arial,sans-serif}
-    body{overflow:hidden}
-
-    .topbar{position:fixed;inset:12px 12px auto 12px;display:flex;align-items:center;gap:10px;z-index:30}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800}
-    .brand img{height:28px}
-    .spacer{flex:1}
-    .nav{display:flex;gap:8px}
-    .chip{border:1px solid var(--ring);border-radius:999px;padding:8px 12px;color:var(--muted);text-decoration:none;background:#0b1224aa;backdrop-filter:blur(6px)}
-    .chip.active{background:linear-gradient(135deg,var(--primary),var(--accent));color:#0a0a0a;font-weight:800}
-
-    .stage{position:relative;width:100vw;height:100vh;perspective:1600px;overflow:hidden}
-    .book{position:absolute;inset:0;transform-style:preserve-3d}
-    .page{position:absolute;inset:0;padding:80px 10vw 64px;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;border:1px solid var(--ring);border-radius:22px;background:linear-gradient(180deg,#0b1224 0%,#0b1224ee 50%,#0b1224cc 100%);box-shadow:0 30px 80px #000a;transform-origin:left center;backface-visibility:hidden}
-    .page .media{display:grid;place-items:center}
-    .page img{max-width:100%;max-height:60vh;object-fit:contain;filter:drop-shadow(0 18px 60px #0008)}
-    .h1{font-size:clamp(28px,6vw,56px);margin:0 0 10px 0}
-    .h2{font-size:clamp(22px,4vw,36px);margin:0 0 8px 0}
-    .muted{color:var(--muted)}
-    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ring);padding:12px 16px;border-radius:12px;background:#0b1224;color:var(--text);text-decoration:none}
-    .btn.primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#0a0a0a;font-weight:800}
-
-    .enter{animation:flipIn .65s cubic-bezier(.22,1,.36,1)}
-    @keyframes flipIn{from{transform:rotateY(-90deg);opacity:.0}to{transform:rotateY(0);opacity:1}}
-
-    .arrows{position:fixed;inset:auto 0 24px 0;display:flex;justify-content:center;gap:16px;z-index:25}
-    .circle{width:56px;height:56px;border-radius:999px;border:1px solid var(--ring);background:#0b1224cc;backdrop-filter:blur(6px);display:grid;place-items:center;cursor:pointer;user-select:none}
-    .circle:active{transform:scale(.98)}
-
-    .wheelDock{position:fixed;right:16px;bottom:16px;z-index:35;display:grid;gap:6px;justify-items:end}
-    canvas{width:140px;height:140px;border-radius:50%;border:1px solid var(--ring);background:#0a0f1f;box-shadow:inset 0 0 50px #0006, 0 10px 30px #0008}
-    .pointer{position:absolute;top:-6px;right:16px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:20px solid var(--primary);filter:drop-shadow(0 4px 10px #000a)}
-    .hint{font-size:12px;color:var(--muted);background:#0b1224aa;border:1px dashed var(--ring);padding:6px 8px;border-radius:10px}
-
-    @media (max-width:1000px){
-      .page{grid-template-columns:1fr;grid-auto-rows:auto}
-      .page img{max-height:36vh}
-      .topbar{inset:10px}
-      .arrows{bottom:14px}
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Corre por tus Notas — Libro Moderno</title>
+<link href="css/game_styles.css" rel="stylesheet" />
 </head>
 <body>
-  <!-- NAV superior -->
-  <div class="topbar">
-    <a class="brand" href="#" id="home"><img src="assets/img/navbar-logo.png" alt="logo"/>Corre por tus Notas!</a>
-    <div class="spacer"></div>
-    <nav class="nav" id="tabs">
-      <a class="chip" data-i="0">Inicio</a>
-      <a class="chip" data-i="1">¿Qué es?</a>
-      <a class="chip" data-i="2">Historia</a>
-      <a class="chip" data-i="3">Gameplay</a>
-      <a class="chip" data-i="4">Desarrollo</a>
-      <a class="chip" data-i="5">Equipo</a>
-      <a class="chip" data-i="6">Contacto</a>
-    </nav>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a class="brand" href="#"><img src="assets/img/navbar-logo.png">Corre por tus Notas</a>
+  <div style="flex:1"></div>
+  <nav class="nav" id="menuTabs"></nav>
+</div>
+
+<!-- BOOK STAGE -->
+<div class="stage">
+  <div class="book" id="book">
+
+    <section class="page">
+      <div class="masthead-content">
+          
+        <!-- Título principal -->
+        <h1 class="masthead-title">Corre por tus Notas</h1>
+
+        <!-- Subtítulo -->
+        <h2 class="masthead-subtitle">LLEGA A TU EXAMEN... ¡ANTES QUE LA CAMPANA!</h2>
+
+        <!-- Texto descriptivo -->
+        <p class="masthead-text">
+          Despierta tarde, ponte los zapatos y corre por tu vida académica.<br>
+          Esquiva autos, bolsas de basura y obstáculos mientras te abres paso por la ciudad.
+        </p>
+
+        <!-- Botón CTA -->
+        <a class="masthead-btn" href="#descripcion">Saber Más</a>
+      </div>
+
+      <!-- Imagen principal -->
+      <div class="masthead-media">
+        <img src="assets/img/corre_inicio.png" alt="Corre por tus Notas">
+      </div>
+    </section>
+
+    
+    <section class="page">
+      <div>
+        <h1>Inicio</h1>
+        <p>Bienvenido al juego "Corre por tus Notas".</p>
+      </div>
+      <div><img src="assets/img/corre_inicio.png"></div>
+    </section>
+
+    <section class="page">
+      <div>
+        <h1>¿Qué es?</h1>
+        <p>Un endless runner urbano donde debes llegar al colegio.</p>
+      </div>
+      <div><img src="assets/img/quees.png"></div>
+    </section>
+
+    <section class="page">
+      <div>
+        <h1>Historia</h1>
+        <p>Te quedaste dormido y debes correr entre autos y basura.</p>
+      </div>
+      <div><img src="assets/img/historia.png"></div>
+    </section>
+
+    <section class="page">
+      <!-- LADO IZQUIERDO -->
+      <div class="left-col">
+        <h1>Gameplay</h1>
+        <p>
+          Salta, esquiva autos, recoge relojes y llega a tiempo.<br>
+          Mira estas demostraciones del gameplay:
+        </p>
+
+        <ul style="margin-top: 12px;">
+          <li>Esquiva autos en movimiento.</li>
+          <li>Salta bolsas y huecos en la pista.</li>
+          <li>Recoge ítems para ganar tiempo extra.</li>
+        </ul>
+
+        <!-- VIDEO IZQUIERDA (pequeño abajo) -->
+        <video class="video-left" src="assets/videos/Video_Juego_Completo.mp4" autoplay muted loop></video>
+      </div>
+
+      <!-- LADO DERECHO: 2 videos grandes -->
+      <div class="right-videos">
+        <video class="video-right" src="assets/videos/Prueba_Juego_Usuario1.mp4" autoplay muted loop></video>
+        <video class="video-right" src="assets/videos/Prueba_Juego_Usuario2.mp4" autoplay muted loop></video>
+      </div>
+    </section>
+
+
+
+    <section class="page">
+      <div>
+        <h1>Contacto</h1>
+        <p>¿Quieres colaborar o probar el juego?</p>
+      </div>
+      <div><img src="assets/img/contacto.png"></div>
+    </section>
+
   </div>
+</div>
 
-  <!-- ESCENARIO libro -->
-  <div class="stage" aria-live="polite" aria-atomic="true">
-    <div class="book" id="book"></div>
-  </div>
+<!-- ARROWS -->
+<div class="arrows">
+  <button class="circle" id="prev">⟵</button>
+  <button class="circle" id="next">⟶</button>
+</div>
 
-  <!-- Flechas -->
-  <div class="arrows">
-    <button class="circle" id="prev" aria-label="Página anterior">⟵</button>
-    <button class="circle" id="next" aria-label="Página siguiente">⟶</button>
-  </div>
+<!-- WHEEL -->
+<div class="wheelDock">
+  <div class="pointer"></div>
+  <canvas id="wheel" width="160" height="160"></canvas>
+</div>
 
-  <!-- Mini-ruleta -->
-  <div class="wheelDock">
-    <div class="pointer" aria-hidden="true"></div>
-    <canvas id="wheel" width="160" height="160" aria-label="Ruleta de secciones"></canvas>
-    <div class="hint">Gira o toca la sección</div>
-  </div>
+<script>
+/* ===========================
+   CAPTURA PÁGINAS DEL HTML
+=========================== */
+const pages = [...document.querySelectorAll(".page")];
+const tabs = document.getElementById("menuTabs");
+let index = 0;
 
-  <script>
-    const PAGES = [
-      {
-        title:'Corre por tus Notas!',
-        subtitle:'EL ENDLESS RUNNER QUE TE LLEVARÁ AL COLEGIO… A TIEMPO',
-        body:`Despierta tarde, ponte los zapatos y ¡corre por tu examen! Esquiva autos, bolsas de basura y peatones para llegar a clases antes de que suene la campana.`,
-        img:'assets/img/corre_inicio.png',
-        cta:[{text:'Descubre más', to:1, primary:true},{text:'Ver gameplay', to:3}]
-      },
-      {
-        title:'¿Qué es Corre por tus Notas?',
-        subtitle:'Un juego urbano de reflejos e ingenio',
-        body:`Corre por tus Notas es un <b>juego tipo endless runner</b> ambientado en una ciudad moderna. 
-        Controlas a un estudiante que se quedó dormido y debe llegar a su examen esquivando <b>carros, bolsas de basura y obstáculos urbanos</b>. 
-        ¡Cada segundo cuenta!`,
-        img:'assets/img/quees.png'
-      },
-      {
-        title:'Historia',
-        subtitle:'El día más importante del colegio',
-        body:`Un chico se despierta tarde el día de su examen final.  
-        Con la mochila a medio cerrar, sale corriendo por las calles de la ciudad.  
-        Entre tráfico, vendedores y basura en las veredas, deberá llegar al colegio a tiempo para salvar su nota.`,
-        img:'assets/img/historia.png'
-      },
-      {
-        title:'Gameplay',
-        subtitle:'Esquiva, salta y corre sin parar',
-        body:`🏃‍♂️ <b>Correr automáticamente</b> — el jugador solo esquiva y salta.<br>
-               🚗 <b>Evita autos y obstáculos</b> con reflejos rápidos.<br>
-               🗑️ <b>Salta bolsas de basura</b> y huecos en la pista.<br>
-               🎓 <b>Recolecta lápices y relojes</b> para sumar tiempo extra.<br>
-               🌆 <b>Fondo urbano</b> con sonidos reales de la ciudad.`,
-        img:'assets/img/gameplay.png'
-      },
-      {
-        title:'Desarrollo',
-        subtitle:'De la idea al prototipo jugable',
-        body:`Inspirado en los estudiantes que siempre llegan al límite.  
-        El desarrollo comenzó con pruebas de <b>física de movimiento</b> y detección de colisiones, 
-        luego se integró la <b>ambientación urbana</b> y un sistema de <b>puntuación infinita</b>.  
-        Se usaron herramientas de <b>Unity y Blender</b> para modelado y animación.`,
-        img:'assets/img/desarrollo.png'
-      },
-      {
-        title:'Equipo',
-        subtitle:'Los creadores detrás del juego',
-        body:`Melany Cahuana · Andrea Cuela · Merisabel Ruelas · Rushell Zavalaga  
-        <br>Equipo de desarrollo de videojuegos — Proyecto académico 2025.`,
-        img:'assets/img/team/equipo.png'
-      },
-      {
-        title:'Contacto',
-        subtitle:'¿Quieres probar o colaborar?',
-        body:`Déjanos tus datos y te escribiremos para probar el juego o recibir novedades.`,
-        img:'assets/img/contacto.png',
-        form:true
-      }
-    ];
+/* Crea los chips automáticamente */
+pages.forEach((p,i)=>{
+  const chip=document.createElement('a');
+  chip.className='chip';
+  chip.textContent=p.querySelector("h1").textContent;
+  chip.onclick=()=>go(i);
+  tabs.appendChild(chip);
+});
 
-    const book = document.getElementById('book');
-    const tabs = [...document.querySelectorAll('#tabs .chip')];
-    const prevBtn = document.getElementById('prev');
-    const nextBtn = document.getElementById('next');
-    let index = 0;
+/* Asigna profundidad */
+pages.forEach((p,i)=>{
+  p.style.zIndex = pages.length - i;
+});
 
-    function render(i){
-      index = Math.max(0, Math.min(PAGES.length-1, i));
-      book.innerHTML = '';
-      const p = PAGES[index];
-      const page = document.createElement('section');
-      page.className = 'page enter';
-      page.innerHTML = `
-        <div>
-          <h1 class="h1">${p.title}</h1>
-          <p class="muted">${p.subtitle||''}</p>
-          <p>${p.body||''}</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px" id="cta"></div>
-          ${p.form?`
-          <form id="contactForm" style="display:grid;gap:10px;margin-top:10px">
-            <input required placeholder="Tu nombre *"/>
-            <input required type="email" placeholder="Tu correo *"/>
-            <input required type="tel" placeholder="Tu teléfono *"/>
-            <textarea required placeholder="Mensaje *"></textarea>
-            <button class="btn primary" type="submit">Enviar</button>
-            <span class="muted" id="msg"></span>
-          </form>`:''}
-        </div>
-        <div class="media">
-          ${p.img?`<img src="${p.img}" alt="${p.title}">`:''}
-        </div>`;
-      book.appendChild(page);
-
-      const ctaMount = page.querySelector('#cta');
-      if(ctaMount && p.cta){
-        p.cta.forEach(c=>{
-          const a=document.createElement('a'); 
-          a.href='#'; 
-          a.className='btn'+(c.primary?' primary':''); 
-          a.textContent=c.text; 
-          a.onclick=(e)=>{e.preventDefault(); go(c.to)}; 
-          ctaMount.appendChild(a);
-        })
-      }
-
-      const form = page.querySelector('#contactForm');
-      if(form){
-        form.addEventListener('submit', e=>{
-          e.preventDefault();
-          page.querySelector('#msg').textContent='¡Gracias! Te contactaremos pronto.';
-          form.reset();
-        });
-      }
-
-      tabs.forEach((t,k)=>t.classList.toggle('active', k===index));
-      drawWheel();
-      updateButtons();
+/* Render libro */
+function render(){
+  pages.forEach((p,i)=>{
+    if(i < index){
+      p.style.transform="rotateY(-180deg)";
+    } else {
+      p.style.transform="rotateY(0deg)";
     }
+  });
 
-    function go(i){ render(i); }
-    function next(){ if(index < PAGES.length-1) go(index+1); }
-    function prev(){ if(index > 0) go(index-1); }
+  [...tabs.children].forEach((c,i)=>c.classList.toggle("active",i===index));
+  prev.disabled = index===0;
+  next.disabled = index===pages.length-1;
 
-    function updateButtons(){
-      prevBtn.style.opacity = index===0? .4:1;
-      nextBtn.style.opacity = index===PAGES.length-1? .4:1;
-    }
+  drawWheel();
+}
 
-    prevBtn.addEventListener('click', prev);
-    nextBtn.addEventListener('click', next);
-    tabs.forEach(t=> t.addEventListener('click', ()=> go(+t.dataset.i)) );
+function go(i){
+  index = Math.max(0,Math.min(i,pages.length-1));
+  render();
+}
+prev.onclick = ()=>go(index-1);
+next.onclick = ()=>go(index+1);
 
-    document.addEventListener('keydown', (e)=>{
-      if(['ArrowRight','PageDown'].includes(e.key)) next();
-      if(['ArrowLeft','PageUp'].includes(e.key)) prev();
-      if(e.key==='Home') go(0);
-      if(e.key==='End') go(PAGES.length-1);
-    });
-    let wheelLock=false;
-    window.addEventListener('wheel', (e)=>{
-      if(wheelLock) return; wheelLock=true;
-      (e.deltaY>0 || e.deltaX>0) ? next() : prev();
-      setTimeout(()=>wheelLock=false, 280);
-    }, {passive:true});
+/* Key events */
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight") go(index+1);
+  if(e.key==="ArrowLeft") go(index-1);
+});
 
-    const wheel = document.getElementById('wheel');
-    const ctx = wheel.getContext('2d');
-    function drawWheel(){
-      const W=wheel.width, H=wheel.height; const R=Math.min(W,H)/2 - 8; const n=PAGES.length; const step=Math.PI*2/n;
-      ctx.clearRect(0,0,W,H); ctx.save(); ctx.translate(W/2,H/2); ctx.rotate(-Math.PI/2);
-      for(let i=0;i<n;i++){
-        ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,R,i*step,(i+1)*step); ctx.closePath();
-        const hue = (i*(360/n))%360; ctx.fillStyle = `hsl(${hue} 70% ${i===index?45:30}%)`; ctx.fill();
-        ctx.strokeStyle = '#0b1224'; ctx.lineWidth=2; ctx.stroke();
-      }
-      ctx.rotate(step/2);
-      ctx.fillStyle='#e5e7eb'; ctx.font='bold 10px system-ui,sans-serif';
-      for(let i=0;i<n;i++){
-        ctx.save(); ctx.rotate(i*step); ctx.textAlign='center'; ctx.fillText(String(i+1), R-12, 4); ctx.restore();
-      }
-      ctx.restore();
-    }
+/* ===========================
+      MINI RULETA
+=========================== */
+const wheel = document.getElementById("wheel");
+const ctx = wheel.getContext("2d");
 
-    wheel.addEventListener('click', (e)=>{
-      const rect = wheel.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width/2; 
-      const y = e.clientY - rect.top - rect.height/2;
-      let ang = Math.atan2(y, x) + Math.PI/2; if(ang<0) ang+=Math.PI*2;
-      const idx = Math.floor( ang / (Math.PI*2/PAGES.length) );
-      go(idx);
-    });
+function drawWheel(){
+  const W=wheel.width, H=wheel.height;
+  const R=Math.min(W,H)/2 - 8;
+  const n=pages.length;
+  const step=Math.PI*2/n;
 
-    render(0);
-  </script>
+  ctx.clearRect(0,0,W,H);
+  ctx.save();
+  ctx.translate(W/2,H/2);
+  ctx.rotate(-Math.PI/2);
+
+  for(let i=0;i<n;i++){
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.arc(0,0,R,i*step,(i+1)*step);
+    ctx.closePath();
+
+    const hue=(i*(360/n))%360;
+    ctx.fillStyle=`hsl(${hue} 70% ${i===index?45:30}%)`;
+    ctx.fill();
+    ctx.strokeStyle="#0b1224";
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+/* Click ruleta */
+wheel.addEventListener("click",e=>{
+  const rect=wheel.getBoundingClientRect();
+  const x=e.clientX-rect.left-rect.width/2;
+  const y=e.clientY-rect.top-rect.height/2;
+  let ang=Math.atan2(y,x)+Math.PI/2;
+  if(ang<0) ang+=Math.PI*2;
+  const n=pages.length;
+  const idx=Math.floor(ang/(Math.PI*2/n));
+  go(idx);
+});
+
+render();
+</script>
+
 </body>
 </html>
